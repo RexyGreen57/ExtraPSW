@@ -1,0 +1,107 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27/06/2020, 01:54:04 AM
+    Author     : Christian
+*/
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: verdana;
+    color: black;    
+}
+
+.menu{
+    position: absolute;
+    width: 60px;
+    height: 100%;
+    background: black;
+    overflow: hidden;
+    -webkit-transition: width 1s;
+    position: fixed;
+}
+
+.menu:hover{
+    width: 200px;
+}
+
+.logo{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    background: black;    
+    background-image: url("menu.png");
+    margin-bottom: 50px;
+}
+
+.contenedor{
+    width: 150px;
+    height: 40px;
+    margin-left: 70px;
+    margin-top: 20px;
+    background: black;
+}
+
+.enlace-menu{
+    color: white;
+    background: black;
+}
+
+.body{
+    position: absolute;
+    right: 140px;
+    left: 210px;
+    min-height: 100%;
+    background: black;
+}
+
+.seccion{
+    min-height: 657px;
+    background: white;
+    padding: 5px;
+    margin-bottom: 5px;
+    color: black;
+    align-content: center;
+}
+
+.izquierda{
+    float: left;
+    width: 50%;
+    margin-bottom: 25%; 
+    margin-top: 25%; 
+    align-content: center;
+}
+
+.derecha{
+    margin-top: 25%;
+    margin-bottom: 25%;
+    float: right;
+    width: 50%;
+    align-content: center;
+    align-items: center;
+}
+
+.Titulo{
+    background: white;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 40px;
+}
+
+.titulo{
+    background: white;
+    text-align: center;
+}
+
+.texto-main{
+    font-size: 16px;
+}
+
+.imagen{
+    align-content: center;
+    align-items: center;
+}
