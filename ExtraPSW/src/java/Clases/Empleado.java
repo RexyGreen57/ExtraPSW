@@ -58,6 +58,28 @@ public class Empleado {
         }
         return emp;
     }
+    
+    public static boolean registrarGerente(String nom, int suc) throws ClassNotFoundException{
+        boolean val;
+        Connection cn = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        
+        try{
+            cn = Conexion.getConexion();
+            String q="insert into empleado (nom_emp, id_suc, status gerente) values (?,?,?)";
+            pr = cn.prepareStatement(q);
+            pr.setString(1, nom);
+            pr.setInt(2, suc);
+            pr.setString(3, "Gerente");
+            pr.executeUpdate();
+            val=true;
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            val=false;
+        }
+        return val;
+    }
 
     public int getId_emp() {
         return id_emp;

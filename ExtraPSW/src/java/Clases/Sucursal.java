@@ -32,29 +32,19 @@ public class Sucursal {
         
         try{
            cn = Conexion.getConexion();
-           q= "select * from cservicio";
+           q= "select * from csucursal";
            pr = cn.prepareStatement(q);
            rs = pr.executeQuery();
            while(rs.next()){
                Sucursal sucursal = new Sucursal();
                sucursal.setId_suc(rs.getInt("id_suc"));
                sucursal.setNom_suc(rs.getString("nom_suc"));
-               sucursal.setDir_suc(rs.getString("id_suc"));
+               sucursal.setDir_suc(rs.getString("dir_suc"));
                suc.add(sucursal);
            }
         }catch(SQLException ex){
             ex.printStackTrace();
             suc = null;
-        }finally{
-            try{
-                rs.close();
-                pr.close();
-                cn.close();
-                
-            }catch(SQLException ex){
-                ex.printStackTrace();
-                System.out.println(ex.getMessage());
-            }
         }
         return suc;
     }

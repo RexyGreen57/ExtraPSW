@@ -32,7 +32,7 @@ public class Servicio {
         
         try{
            cn = Conexion.getConexion();
-           q= "select * from cservicio";
+           q= "select * from cservicios";
            pr = cn.prepareStatement(q);
            rs = pr.executeQuery();
            while(rs.next()){
@@ -69,7 +69,7 @@ public class Servicio {
         
         try{
            cn = Conexion.getConexion();
-           q= "select * from cservicio where id_serv = ?";
+           q= "select * from cservicios where id_serv = ?";
            pr = cn.prepareStatement(q);
            pr.setInt(1, id_serv);
            rs = pr.executeQuery();

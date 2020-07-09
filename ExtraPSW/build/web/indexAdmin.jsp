@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 27/06/2020, 01:44:11 AM
+    Document   : indexAdmin
+    Created on : 8/07/2020, 05:35:54 PM
     Author     : Christian
 --%>
 
@@ -12,16 +12,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> Inicio </title>
+        <title>Inicio</title>
         <link rel="stylesheet" href="css/estilos.css"/>
     </head>
     <body>
         <div class="menu">
             
             <div class="logo">    
-            </div>
-            <div class="contenedor">
-                <a href="LogIn.jsp" class="enlace-menu">Iniciar Sesion</a>
             </div>
             <div class="contenedor">
                 <a href="#inicio" class="enlace-menu">Inicio</a>
@@ -37,6 +34,18 @@
             </div>
             <div class="contenedor">
                 <a href="#contacto" class="enlace-menu">Contacto</a>
+            </div>
+            <div class="contenedor">
+                <a href="citasAdmin.jsp" class="enlace-menu">Citas</a>
+            </div>
+            <div class="contenedor">
+                <a href="usuariosAdmin.jsp" class="enlace-menu">Usuarios</a>
+            </div>
+            <div class="contenedor">
+                <a href="Graficas.jsp" class="enlace-menu">Graficas</a>
+            </div>
+            <div class="contenedor">
+                <a href="index.jsp" class="enlace-menu">Salir</a>
             </div>
         </div>
         <div class="body" id="inicio">

@@ -16,7 +16,7 @@ public class Usuario {
     private int id_usu;
     private String nom_usu;
     private String dir_usu;
-    private int tel_usu;
+    private float tel_usu;
     private String email_usu;
     private String password_usu;
     private int priv_usu;
@@ -24,17 +24,11 @@ public class Usuario {
     public Usuario(){
         
     }
-    
-    //La primera operacion es la verificacion del tipo de usuario
-    
+        
     public Usuario verificarUsuario(String email, String password) throws SQLException, ClassNotFoundException{
-        //objeto de usuario
         Usuario u = null;
-        //objeto de conexion
         Connection cn = null;
-        //sentencias sql
         PreparedStatement pr = null;
-        //consultas sql
         ResultSet rs = null;
         
         try{
@@ -80,12 +74,10 @@ public class Usuario {
         return u;
     }
     
-    public boolean registrarUsuario(String name, String email, String password, String direccion, int tel) throws ClassNotFoundException{
+    public boolean registrarUsuario(String name, String email, String password, String direccion, float tel) throws ClassNotFoundException{
         boolean val;
         Connection cn = null;
-        //sentencias sql
         PreparedStatement pr = null;
-        //consultas sql
         ResultSet rs = null;
         
         try{
@@ -98,8 +90,8 @@ public class Usuario {
             pr.setString(2, email);
             pr.setString(3, password);
             pr.setString(4, direccion);
-            pr.setInt(5, tel);
-            pr.setInt(6, 0);
+            pr.setFloat(5, tel);
+            pr.setInt(6, 3);
             pr.executeUpdate();
             val=true;
         }catch(SQLException ex){
@@ -109,11 +101,38 @@ public class Usuario {
         return val;
     }
     
+    public boolean registrarGerente(String name, String email, String password, String direccion, float tel, int sucursal) throws ClassNotFoundException{
+        boolean val;
+        Connection cn = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        
+        try{
+            cn = Conexion.getConexion();
+            String q;
+            q = "insert into usuario (nom_usu, email_usu, password_usu, dir_usu, tel_usu, priv_usu) values (?,?,?,?,?,?)";
+            
+            pr = cn.prepareStatement(q);
+            pr.setString(1, name);
+            pr.setString(2, email);
+            pr.setString(3, password);
+            pr.setString(4, direccion);
+            pr.setFloat(5, tel);
+            pr.setInt(6, 2);
+            pr.executeUpdate();
+            val=Empleado.registrarGerente(name, sucursal);
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            val=false;
+        }
+        return val;
+    }
+    
+    
+    
     public boolean eliminarUsuarioAdmin(String name, String email) throws ClassNotFoundException{
         Connection cn = null;
-        //sentencias sql
         PreparedStatement pr = null;
-        //consultas sql
         ResultSet rs = null;
         boolean val;
         
@@ -137,9 +156,7 @@ public class Usuario {
     
     public boolean modificarNombre(String name,String nameA) throws ClassNotFoundException{
         Connection cn = null;
-        //sentencias sql
         PreparedStatement pr = null;
-        //consultas sql
         ResultSet rs = null;
         boolean val;
         
@@ -163,9 +180,7 @@ public class Usuario {
     
     public boolean modificarEmail(String email,String emailA) throws ClassNotFoundException{
         Connection cn = null;
-        //sentencias sql
         PreparedStatement pr = null;
-        //consultas sql
         ResultSet rs = null;
         boolean val;
         
@@ -190,9 +205,7 @@ public class Usuario {
     
     public boolean modificarPassword(String password,String passwordA) throws ClassNotFoundException{
         Connection cn = null;
-        //sentencias sql
         PreparedStatement pr = null;
-        //consultas sql
         ResultSet rs = null;
         boolean val;
         
@@ -218,9 +231,7 @@ public class Usuario {
     
     public boolean promoverAdmin(String name, String email) throws ClassNotFoundException{
         Connection cn = null;
-        //sentencias sql
         PreparedStatement pr = null;
-        //consultas sql
         ResultSet rs = null;
         boolean val;
         
@@ -267,11 +278,11 @@ public class Usuario {
         this.dir_usu = dir_usu;
     }
 
-    public int getTel_usu() {
+    public float getTel_usu() {
         return tel_usu;
     }
 
-    public void setTel_usu(int tel_usu) {
+    public void setTel_usu(float tel_usu) {
         this.tel_usu = tel_usu;
     }
 
