@@ -8,18 +8,20 @@ package Controlador;
 import Clases.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Christian
  */
-public class registrarUsuario extends HttpServlet {
+public class validarLogIn extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,34 +33,44 @@ public class registrarUsuario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException {
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String nombre = request.getParameter("nombre");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String telefono = request.getParameter("telefono");
-            String direccion = request.getParameter("direccion");
-            int sucursal = Integer.parseInt(request.getParameter("sucursal"));
-            boolean val;
             
-            if (sucursal == 0) {
-                val=Usuario.registrarUsuario(nombre, email, password, direccion, telefono);
-                if(val){
-                    response.sendRedirect("LogIn.jsp");
+            Usuario u = Usuario.verificarUsuario(email, password);
+            
+            if (u != null) {
+                HttpSession session = request.getSession(true);
+
+                session.setAttribute("usuario", u);
+
+                HttpSession sessionOk = request.getSession();
+                sessionOk.setAttribute("id", u.getId_usu());
+                sessionOk.setAttribute("usuario", u.getNom_usu());
+                sessionOk.setAttribute("email", u.getEmail_usu());
+                sessionOk.setAttribute("password", u.getPass_usu());
+                sessionOk.setAttribute("privilegio", u.getPriv_usu());
+                sessionOk.setAttribute("direccion", u.getDir_usu());
+                sessionOk.setAttribute("telefono", u.getTel_usu());
+                sessionOk.setAttribute("status", u.getStatus_usu());
+                if (u.getStatus_usu().equalsIgnoreCase("activo")) {
+                    if (u.getPriv_usu() == 3) {
+                        response.sendRedirect("indexCliente.jsp");
+                    }else if(u.getPriv_usu() == 2 || u.getPriv_usu() == 1){
+                        response.sendRedirect("indexAdmin.jsp");
+                    }
                 }else{
                     response.sendRedirect("error.jsp");
+                    
                 }
             }else{
-                val=Usuario.registrarGerente(nombre, email, password, direccion, telefono, sucursal);
-                if(val){
-                    response.sendRedirect("LogIn.jsp");
-                }else{
-                    response.sendRedirect("error.jsp");
-                }
+                response.sendRedirect("error.jsp");
             }
-            
+                
+                
         }catch(Exception e){
                 e.getMessage();
                 e.getStackTrace();
@@ -79,8 +91,10 @@ public class registrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(validarLogIn.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(registrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(validarLogIn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,8 +111,10 @@ public class registrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(validarLogIn.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(registrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(validarLogIn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

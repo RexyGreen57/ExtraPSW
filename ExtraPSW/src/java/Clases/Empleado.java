@@ -31,7 +31,7 @@ public class Empleado {
         
         try{
            cn = Conexion.getConexion();
-           q= "select * from cservicio";
+           q= "select * from empleado";
            pr = cn.prepareStatement(q);
            rs = pr.executeQuery();
            while(rs.next()){
@@ -67,7 +67,7 @@ public class Empleado {
         
         try{
             cn = Conexion.getConexion();
-            String q="insert into empleado (nom_emp, id_suc, status gerente) values (?,?,?)";
+            String q="insert into empleado (nom_emp, id_suc, status_emp) values (?,?,?)";
             pr = cn.prepareStatement(q);
             pr.setString(1, nom);
             pr.setInt(2, suc);
@@ -80,6 +80,29 @@ public class Empleado {
         }
         return val;
     }
+    
+    public static boolean registrarEmpleado(String nom, int suc) throws ClassNotFoundException{
+        boolean val;
+        Connection cn = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        
+        try{
+            cn = Conexion.getConexion();
+            String q="insert into empleado (nom_emp, id_suc, status_emp) values (?,?,?)";
+            pr = cn.prepareStatement(q);
+            pr.setString(1, nom);
+            pr.setInt(2, suc);
+            pr.setString(3, "Empleado");
+            pr.executeUpdate();
+            val=true;
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            val=false;
+        }
+        return val;
+    }
+    
 
     public int getId_emp() {
         return id_emp;

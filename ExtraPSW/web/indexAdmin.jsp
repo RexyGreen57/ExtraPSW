@@ -16,6 +16,21 @@
         <link rel="stylesheet" href="css/estilos.css"/>
     </head>
     <body>
+        <% 
+            String usuario = "";
+            HttpSession sessionOk = request.getSession();
+            if (sessionOk.getAttribute("usuario")== null || (Integer) sessionOk.getAttribute("privilegio") != 1){
+        %>
+        
+        <jsp:forward page="LogIn.jsp">
+            <jsp:param name="error" value="es obligatorio identificarse"></jsp:param>
+        </jsp:forward>
+        
+        <%
+            }else{
+                usuario = (String)sessionOk.getAttribute("usuario");
+            }
+        %>
         <div class="menu">
             
             <div class="logo">    
@@ -36,7 +51,7 @@
                 <a href="#contacto" class="enlace-menu">Contacto</a>
             </div>
             <div class="contenedor">
-                <a href="citasAdmin.jsp" class="enlace-menu">Citas</a>
+                <a href="CitasAdmin.jsp" class="enlace-menu">Citas</a>
             </div>
             <div class="contenedor">
                 <a href="usuariosAdmin.jsp" class="enlace-menu">Usuarios</a>

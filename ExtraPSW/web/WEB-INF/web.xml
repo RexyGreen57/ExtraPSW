@@ -4,9 +4,17 @@
         <servlet-name>registrarUsuario</servlet-name>
         <servlet-class>Controlador.registrarUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>validarLogIn</servlet-name>
+        <servlet-class>Controlador.validarLogIn</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registrarUsuario</servlet-name>
         <url-pattern>/registrarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>validarLogIn</servlet-name>
+        <url-pattern>/validarLogIn</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

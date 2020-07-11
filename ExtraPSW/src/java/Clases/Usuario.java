@@ -16,16 +16,17 @@ public class Usuario {
     private int id_usu;
     private String nom_usu;
     private String dir_usu;
-    private float tel_usu;
+    private String tel_usu;
     private String email_usu;
     private String password_usu;
     private int priv_usu;
+    private String status_usu;
 
     public Usuario(){
         
     }
         
-    public Usuario verificarUsuario(String email, String password) throws SQLException, ClassNotFoundException{
+    public static Usuario verificarUsuario(String email, String password) throws SQLException, ClassNotFoundException{
         Usuario u = null;
         Connection cn = null;
         PreparedStatement pr = null;
@@ -34,21 +35,23 @@ public class Usuario {
         try{
         cn = Conexion.getConexion();
             String q;
-            q = "Select * from usuario where email_usu = ? AND password_usu = ?";
+            q = "Select * from usuario where email_usu = ? AND pass_usu = ?";
             
             pr = cn.prepareStatement(q);
             pr.setString(1, email);
             pr.setString(2, password);
             
             rs = pr.executeQuery();    
-            
             while(rs.next()){
                 u = new Usuario();
                 u.setId_usu(rs.getInt("id_usu"));
                 u.setNom_usu(rs.getString("nom_usu"));
-                u.setEmail_usu(rs.getString("user_email"));
-                u.setPassword_usu(rs.getString("password_usu"));
+                u.setEmail_usu(rs.getString("email_usu"));
+                u.setPass_usu(rs.getString("pass_usu"));
                 u.setPriv_usu(rs.getInt("priv_usu"));
+                u.setDir_usu(rs.getString("dir_usu"));
+                u.setTel_usu(rs.getString("tel_usu"));
+                u.setStatus_usu(rs.getString("status_usu"));
                 
                 break;
             }
@@ -74,7 +77,7 @@ public class Usuario {
         return u;
     }
     
-    public boolean registrarUsuario(String name, String email, String password, String direccion, float tel) throws ClassNotFoundException{
+    public static boolean registrarUsuario(String name, String email, String password, String direccion, String tel) throws ClassNotFoundException{
         boolean val;
         Connection cn = null;
         PreparedStatement pr = null;
@@ -83,14 +86,14 @@ public class Usuario {
         try{
             cn = Conexion.getConexion();
             String q;
-            q = "insert into usuario (nom_usu, email_usu, password_usu, dir_usu, tel_usu, priv_usu) values (?,?,?,?,?,?)";
+            q = "insert into usuario (nom_usu, email_usu, pass_usu, dir_usu, tel_usu, priv_usu) values (?,?,?,?,?,?)";
             
             pr = cn.prepareStatement(q);
             pr.setString(1, name);
             pr.setString(2, email);
             pr.setString(3, password);
             pr.setString(4, direccion);
-            pr.setFloat(5, tel);
+            pr.setString(5, tel);
             pr.setInt(6, 3);
             pr.executeUpdate();
             val=true;
@@ -101,7 +104,7 @@ public class Usuario {
         return val;
     }
     
-    public boolean registrarGerente(String name, String email, String password, String direccion, float tel, int sucursal) throws ClassNotFoundException{
+    public static boolean registrarGerente(String name, String email, String password, String direccion, String tel, int sucursal) throws ClassNotFoundException{
         boolean val;
         Connection cn = null;
         PreparedStatement pr = null;
@@ -110,14 +113,14 @@ public class Usuario {
         try{
             cn = Conexion.getConexion();
             String q;
-            q = "insert into usuario (nom_usu, email_usu, password_usu, dir_usu, tel_usu, priv_usu) values (?,?,?,?,?,?)";
+            q = "insert into usuario (nom_usu, email_usu, pass_usu, dir_usu, tel_usu, priv_usu) values (?,?,?,?,?,?)";
             
             pr = cn.prepareStatement(q);
             pr.setString(1, name);
             pr.setString(2, email);
             pr.setString(3, password);
             pr.setString(4, direccion);
-            pr.setFloat(5, tel);
+            pr.setString(5, tel);
             pr.setInt(6, 2);
             pr.executeUpdate();
             val=Empleado.registrarGerente(name, sucursal);
@@ -130,7 +133,7 @@ public class Usuario {
     
     
     
-    public boolean eliminarUsuarioAdmin(String name, String email) throws ClassNotFoundException{
+    public static boolean desactivarCuenta(String name, String email) throws ClassNotFoundException{
         Connection cn = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -139,7 +142,7 @@ public class Usuario {
         try{
         cn = Conexion.getConexion();
             String q;
-            q = "delete from usuario where user_name = ? AND user_email = ?";
+            q = "Update usuario set status_usu = 'inactivo' where nom_usu = ? AND email_usu = ?";
             
             pr = cn.prepareStatement(q);
             pr.setString(1, name);
@@ -154,7 +157,7 @@ public class Usuario {
         return val;
     }
     
-    public boolean modificarNombre(String name,String nameA) throws ClassNotFoundException{
+    public static boolean modificarNombre(String name,String nameA) throws ClassNotFoundException{
         Connection cn = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -178,7 +181,7 @@ public class Usuario {
         return val;
     }
     
-    public boolean modificarEmail(String email,String emailA) throws ClassNotFoundException{
+    public static boolean modificarEmail(String email,String emailA) throws ClassNotFoundException{
         Connection cn = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -203,7 +206,7 @@ public class Usuario {
         return val;
     }
     
-    public boolean modificarPassword(String password,String passwordA) throws ClassNotFoundException{
+    public static boolean modificarPassword(String password,String passwordA) throws ClassNotFoundException{
         Connection cn = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -212,7 +215,7 @@ public class Usuario {
         try{
         cn = Conexion.getConexion();
             String q;
-            q = "update set usuario password_usu = ? where password_usu = ?";
+            q = "update set usuario pass_usu = ? where pass_usu = ?";
             
             pr = cn.prepareStatement(q);
             pr.setString(1, password);
@@ -229,7 +232,7 @@ public class Usuario {
     
     
     
-    public boolean promoverAdmin(String name, String email) throws ClassNotFoundException{
+    public static boolean promoverAdmin(String name, String email) throws ClassNotFoundException{
         Connection cn = null;
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -278,11 +281,11 @@ public class Usuario {
         this.dir_usu = dir_usu;
     }
 
-    public float getTel_usu() {
+    public String getTel_usu() {
         return tel_usu;
     }
 
-    public void setTel_usu(float tel_usu) {
+    public void setTel_usu(String tel_usu) {
         this.tel_usu = tel_usu;
     }
 
@@ -294,11 +297,11 @@ public class Usuario {
         this.email_usu = email_usu;
     }
 
-    public String getPassword() {
+    public String getPass_usu() {
         return password_usu;
     }
 
-    public void setPassword_usu(String password_usu) {
+    public void setPass_usu(String password_usu) {
         this.password_usu = password_usu;
     }
 
@@ -308,6 +311,14 @@ public class Usuario {
 
     public void setPriv_usu(int priv_usu) {
         this.priv_usu = priv_usu;
+    }
+
+    public String getStatus_usu() {
+        return status_usu;
+    }
+
+    public void setStatus_usu(String status_usu) {
+        this.status_usu = status_usu;
     }
     
     

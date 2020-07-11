@@ -12,17 +12,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> LogIn </title>
-        <link rel="stylesheet" href=""/>
+        <link rel="stylesheet" href="css/LogIn.css"/>
     </head>
     <body>
-        <script src="js/ValidacionLogIn.js"/>
+        <script src="js/ValidacionLogIn.js"></script>
         <h1>Estetica AUX</h1>
         <div class="login">
             <h3>Si ya tienes una cuenta Inicia Sesion Aqui</h3>
-            <form action="validarLogin" method="post">
+            <form action="validarLogIn" method="post">
                 Email:
                 <br>
-                <input type="text" name="nombre" required>
+                <input type="text" name="email" required>
                 <br>
                 <br>
                 Contraseña:
@@ -33,7 +33,7 @@
                 <input type="submit" value="Ingresar">
             </form>
         </div>
-        <div>
+        <div class="registro">
             <h3>Si aun no tienes una cuenta registrada con nosotros puedes hacerlo aqui</h3>
             <form method="" action="registrarUsuario">
                 Nombre:
@@ -81,9 +81,10 @@
                 <br>
                 <br>
                 <input type="submit" value="Registrarse">
-                
             </form>
         </div>
-        <a href="javascript: window.history.go(-2);">volver</a>
+        <div class="regreso">
+            <a href="javascript: window.history.go(-1);"><img src="img/regreso.png"></a>
+        </div>
     </body>
 </html>
